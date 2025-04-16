@@ -11,39 +11,48 @@ import Myfavorites from "./components/Myfavorites";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import TvSeries from "./components/Tvseries";
+import Error from "./components/Error";
+import Banner from "./components/Banner";
 
 const router = createBrowserRouter([
    {
       path: "/",
       element: <Root></Root>,
-   },
-   {
-      path: "/allMovies",
-      element: <Allmovies></Allmovies>,
-   },
-   {
-      path: "/addmovie",
-      element: <Addmovie></Addmovie>,
-   },
-   {
-      path: "/home",
-      element: <Home></Home>,
-   },
-   {
-      path: "/myFavorites",
-      element: <Myfavorites></Myfavorites>,
-   },
-   {
-      path: "/tvseries",
-      element: <TvSeries></TvSeries>,
-   },
-   {
-      path: "/register",
-      element: <Register></Register>,
-   },
-   {
-      path: "/login",
-      element: <Login></Login>,
+      errorElement: <Error></Error>,
+      children: [
+         {
+            path: "/allMovies",
+            element: <Allmovies></Allmovies>,
+         },
+         {
+            path: "/addmovie",
+            element: <Addmovie></Addmovie>,
+         },
+         {
+            path: "/",
+            element: <Home></Home>,
+         },
+         {
+            path: "/myFavorites",
+            element: <Myfavorites></Myfavorites>,
+         },
+         {
+            path: "/tvseries",
+            element: <TvSeries></TvSeries>,
+         },
+         {
+            path: "/register",
+            element: <Register></Register>,
+         },
+         {
+            path: "/banner",
+            element: <Banner></Banner>,
+         },
+         {
+            path: "/login",
+            element: <Login></Login>,
+         },
+      ],
    },
 ]);
 

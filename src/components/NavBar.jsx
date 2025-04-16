@@ -4,31 +4,40 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
    const links = (
       <>
-         <Link to="/home" className="font-bold ">
+         <Link to="/" className="font-bold  cursor-pointer hover:border-b-3   border-white ">
             Home
          </Link>
-         <Link to="/allMovies" className="font-bold">
+         <Link
+            to="/allMovies"
+            className="font-bold  cursor-pointer hover:border-b-3   border-white "
+         >
             All Movies
          </Link>
-         <Link to="/addmovie" className="font-bold">
+         <Link to="/addmovie" className="font-bold  cursor-pointer hover:border-b-3   border-white">
             Add Movie
          </Link>
-         <Link to="/myFavorites" className="font-bold">
+         <Link
+            to="/myFavorites"
+            className="font-bold cursor-pointer hover:border-b-3   border-white"
+         >
             My favorites
          </Link>
-         <Link to="/tvseries" className="font-bold">
+         <Link to="/tvseries" className="font-bold cursor-pointer hover:border-b-3   border-white">
             Tv Series
          </Link>
-         <Link to="/login" className="font-bold">
+         <Link to="/login" className="font-bold cursor-pointer hover:border-b-3   border-white">
             Login
          </Link>
-         <Link to="/register" className="font-bold">
+         <Link to="/register" className="font-bold  cursor-pointer hover:border-b-3   border-white">
             Register
          </Link>
       </>
    );
    return (
-      <div className="navbar bg-base-100 shadow-sm flex">
+      <div
+         className="navbar bg-zinc-800 text-amber-50
+       shadow-sm flex"
+      >
          <div className="navbar-start">
             <div className="dropdown">
                <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -55,10 +64,11 @@ const NavBar = () => {
                   {links}
                </ul>
             </div>
-            <a className="btn btn-ghost text-xl">MovieGAlaxy</a>
+
+            <a className=" text-xl">MovieGAlaxy</a>
          </div>
-         <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal  gap-8 pr-24">{links}</ul>
+         <div className="navbar-center hidden  lg:flex">
+            <ul className="menu menu-horizontal    gap-8 pr-24">{links}</ul>
          </div>
       </div>
    );
