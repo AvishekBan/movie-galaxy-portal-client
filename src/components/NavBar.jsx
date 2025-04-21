@@ -35,7 +35,7 @@ const NavBar = () => {
    );
    return (
       <div
-         className="navbar bg-zinc-800 text-amber-50
+         className="navbar  fixed top-0 w-full    z-50 bg-white/10 backdrop-blur-md border-b border-white/20 grayscale text-gray-800
        shadow-sm flex"
       >
          <div className="navbar-start">
@@ -65,7 +65,10 @@ const NavBar = () => {
                </ul>
             </div>
 
-            <a className=" text-xl">MovieGAlaxy</a>
+            <a className="poppins-semibold text-xl">
+               <span>Movie</span>
+               <span className="text-purple-400">GAlaxy</span>
+            </a>
          </div>
          <div className="navbar-center hidden  lg:flex">
             <ul className="menu menu-horizontal    gap-8 pr-24">{links}</ul>

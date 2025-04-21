@@ -13,6 +13,9 @@ import Login from "./components/Login";
 import TvSeries from "./components/Tvseries";
 import Error from "./components/Error";
 import Banner from "./components/Banner";
+import MovieDetails from "./components/MovieDetails";
+import FeaturedMovies from "./components/FeaturedMovies";
+import PlanSubscription from "./components/PlanSubscription";
 
 const router = createBrowserRouter([
    {
@@ -47,6 +50,18 @@ const router = createBrowserRouter([
          {
             path: "/banner",
             element: <Banner></Banner>,
+         },
+         {
+            path: "/movieDetails",
+            element: <MovieDetails></MovieDetails>,
+         },
+         {
+            path: "/FeaturedMovies",
+            element: <FeaturedMovies></FeaturedMovies>,
+         },
+         {
+            path: "/PlanSubscription",
+            element: <PlanSubscription></PlanSubscription>,
          },
          {
             path: "/login",
