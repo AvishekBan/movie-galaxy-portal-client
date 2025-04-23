@@ -3,6 +3,10 @@ import React from "react";
 const FeaturedMovies = () => {
    return (
       <div>
+         <div className="divider divider-neutral poppins-semibold text-3xl">
+            Featured<span className="text-purple-400">Movies</span>
+         </div>
+
          <div className="card bg-base-100 w-96 shadow-sm">
             <figure className="px-10 pt-10">
                <img
