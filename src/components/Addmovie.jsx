@@ -1,7 +1,22 @@
 import React, { useState } from "react";
 
-const genres = ["Comedy", "Drama", "Horror", "Action", "Romance"];
-const years = [2024, 2023, 2022, 2021, 2020];
+import { Rating } from "react-simple-star-rating";
+const genres = [
+   "Comedy",
+   "Drama",
+   "Horror",
+   "Action",
+   "Romance",
+   "Crime",
+   "Sci-fi",
+   "Fantasy",
+   "Adventure",
+];
+const years = [
+   2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009,
+   2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000, 1999, 1998, 1997, 1996, 1995, 1994, 1993,
+   1992, 1991, 1990,
+];
 
 const Addmovie = () => {
    const [form, setForm] = useState({
@@ -34,6 +49,9 @@ const Addmovie = () => {
       if (!form.releaseYear) {
          newErrors.releaseYear = "Please select a release year";
       }
+      if (!form.rating || form.rating <= 0) {
+         newErrors.rating = "Please select a rating";
+      }
 
       if (!form.summary || form.summary.length < 10) {
          newErrors.summary = "Summary must be at least 10 characters long";
@@ -51,7 +69,19 @@ const Addmovie = () => {
       e.preventDefault();
       if (validate()) {
          console.log("Form Submitted:", form);
+
          // handle the actual movie add logic here
+         fetch("http://localhost:5000/movie", {
+            method: "POST",
+            headers: {
+               "content-type": "application/json",
+            },
+            body: JSON.stringify({ form }),
+         })
+            .then((res) => res.json())
+            .then((data) => {
+               console.log(data);
+            });
       }
    };
 
@@ -142,9 +172,18 @@ const Addmovie = () => {
             </div>
 
             {/* Rating */}
-            <div>
-               <label className="block text-gray-700 font-medium mb-2">Rating</label>
 
+            <div className="mb-4">
+               <label className="block text-gray-700 font-medium mb-2">Rating</label>
+               <div className="inline-block">
+                  <Rating
+                     onClick={(rate) => setForm((prev) => ({ ...prev, rating: rate / 20 }))}
+                     initialValue={form.rating * 20}
+                     size={30}
+                     allowFraction
+                     SVGstyle={{ display: "inline-block" }}
+                  />
+               </div>
                {errors.rating && <p className="text-red-500 text-sm mt-1">{errors.rating}</p>}
             </div>
 

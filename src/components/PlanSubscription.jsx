@@ -11,12 +11,12 @@ const PlanSubscription = () => {
                <div className="card-body">
                   <span className="badge badge-xs badge-warning">Popular</span>
                   <div className="flex justify-between">
-                     <h2 className="text-3xl font-bold">Basic</h2>
+                     <h2 className="text-3xl font-bold text-gray-600">Basic</h2>
                      <span className="text-xl bg-green-500 text-white rounded-xl px-6 py-2 ">
                         FREE
                      </span>
                   </div>
-                  <ul className="mt-6 flex flex-col gap-2 text-xs">
+                  <ul className="mt-6 flex flex-col gap-2 text-xs text-purple-400">
                      <li>
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
@@ -129,10 +129,10 @@ const PlanSubscription = () => {
                <div className="card-body">
                   <span className="badge badge-xs badge-warning">Popular</span>
                   <div className="flex justify-between">
-                     <h2 className="text-3xl font-bold">Standard</h2>
+                     <h2 className="text-3xl font-bold text-gray-600">Standard</h2>
                      <span className="text-xl">$15/mo</span>
                   </div>
-                  <ul className="mt-6 flex flex-col gap-2 text-xs">
+                  <ul className="mt-6 flex flex-col gap-2 text-xs text-purple-400">
                      <li>
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
@@ -245,10 +245,10 @@ const PlanSubscription = () => {
                <div className="card-body">
                   <span className="badge badge-xs badge-warning">Most Popular</span>
                   <div className="flex justify-between">
-                     <h2 className="text-3xl font-bold">Premium</h2>
+                     <h2 className="text-3xl font-bold text-gray-600">Premium</h2>
                      <span className="text-xl">$30/mo</span>
                   </div>
-                  <ul className="mt-6 flex flex-col gap-2 text-xs">
+                  <ul className="mt-6 flex flex-col gap-2 text-xs text-purple-400">
                      <li>
                         <svg
                            xmlns="http://www.w3.org/2000/svg"

@@ -46,7 +46,7 @@ const Banner = () => {
                   {showDetails && (
                      <div className="mt-4 text-center animate__animated animate__fadeInUp">
                         <h2 className="text-xl  font-bold mb-2 poppins-semibold">Sherlock</h2>
-                        <div className="flex w-full">
+                        <div className="flex w-full text-gray-600">
                            <div className="card bg-base-300 rounded-box grid h-10 grow place-items-center border border-red-600">
                               Adventure
                            </div>

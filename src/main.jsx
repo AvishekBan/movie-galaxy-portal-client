@@ -16,6 +16,7 @@ import Banner from "./components/Banner";
 import MovieDetails from "./components/MovieDetails";
 import FeaturedMovies from "./components/FeaturedMovies";
 import PlanSubscription from "./components/PlanSubscription";
+import MovieCard from "./components/MovieCard";
 
 const router = createBrowserRouter([
    {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
          {
             path: "/allMovies",
             element: <Allmovies></Allmovies>,
+            loader: () => fetch("http://localhost:5000/movie"),
          },
          {
             path: "/addmovie",
@@ -66,6 +68,10 @@ const router = createBrowserRouter([
          {
             path: "/login",
             element: <Login></Login>,
+         },
+         {
+            path: "/movieCard",
+            element: <MovieCard></MovieCard>,
          },
       ],
    },
