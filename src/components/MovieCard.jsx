@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 const MovieCard = ({ movie }) => {
    const { poster, title, genre, duration, releaseYear, rating } = movie.form;
    return (
@@ -30,6 +31,7 @@ const MovieCard = ({ movie }) => {
                   See Details
                </Link>
             </div>
+            <div></div>
          </div>
       </div>
    );

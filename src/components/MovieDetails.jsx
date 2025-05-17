@@ -32,12 +32,12 @@ const MovieDetails = () => {
                   </p>
 
                   <div className="flex gap-4 mt-6">
-                     <button className="bg-red-500 text-white px-4 py-2 rounded-xl hover:bg-red-600 transition">
+                     <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
                         Delete Movie
                      </button>
                      <Link
                         to="/myFavorites"
-                        className="bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition"
+                        className="btn btn-primary hover:bg-purple-600 transition"
                      >
                         Add to Favorite
                      </Link>

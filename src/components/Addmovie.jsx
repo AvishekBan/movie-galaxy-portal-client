@@ -65,6 +65,13 @@ const Addmovie = () => {
       setForm({ ...form, [e.target.name]: e.target.value });
    };
 
+   const handleRating = (rate) => {
+      setForm((prev) => ({
+         ...prev,
+         rating: rate,
+      }));
+   };
+
    const handleSubmit = (e) => {
       e.preventDefault();
       if (validate()) {
@@ -172,13 +179,12 @@ const Addmovie = () => {
             </div>
 
             {/* Rating */}
-
             <div className="mb-4">
                <label className="block text-gray-700 font-medium mb-2">Rating</label>
                <div className="inline-block">
                   <Rating
-                     onClick={(rate) => setForm((prev) => ({ ...prev, rating: rate / 20 }))}
-                     initialValue={form.rating * 20}
+                     onClick={handleRating}
+                     initialValue={form.rating} // ✅ Convert 0–5 back to 0–100 for stars
                      size={30}
                      allowFraction
                      SVGstyle={{ display: "inline-block" }}
