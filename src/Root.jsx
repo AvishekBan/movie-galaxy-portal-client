@@ -11,6 +11,7 @@ const Root = () => {
          </div>
 
          <Outlet></Outlet>
+
          <Footer></Footer>
       </div>
    );

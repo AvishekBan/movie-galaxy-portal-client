@@ -1,5 +1,18 @@
 import { Link } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
+
+export const SearchBar = ({ searchTerm, onChange }) => (
+   <div className="w-full flex justify-center mb-8">
+      <input
+         type="text"
+         placeholder="Search..."
+         value={searchTerm}
+         onChange={(e) => onChange(e.target.value)}
+         className="input input-bordered w-full max-w-md text-lg border-b-fuchsia-800"
+      />
+   </div>
+);
+
 const MovieCard = ({ movie }) => {
    const { poster, title, genre, duration, releaseYear, rating } = movie.form;
    return (
