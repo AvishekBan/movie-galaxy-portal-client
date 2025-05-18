@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { Rating } from "react-simple-star-rating";
 const MovieCard = ({ movie }) => {
    const { poster, title, genre, duration, releaseYear, rating } = movie.form;
    return (
@@ -22,7 +22,16 @@ const MovieCard = ({ movie }) => {
                <div className="divider divider-horizontal"></div>
                <div>
                   <p className="font-semibold ">Year: {releaseYear}</p>
-                  <p className="font-semibold ">Rating: {rating}</p>
+                  <p className="font-semibold flex items-center gap-2 mt-2">
+                     <Rating
+                        readonly
+                        initialValue={rating}
+                        allowFraction
+                        size={25}
+                        SVGstyle={{ display: "inline-block" }}
+                     />
+                     <span className="text-gray-700 font-medium">{rating.toFixed(1)}</span>
+                  </p>
                </div>
             </div>
 
