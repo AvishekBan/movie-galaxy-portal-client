@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import Delete from "../assets/delete_12319558.png";
 import Favourite from "../assets/chat_5251836.png";
+import Swal from "sweetalert2";
 const MovieDetails = () => {
    const { state } = useLocation();
    const movie = state?.movie;
@@ -10,6 +11,38 @@ const MovieDetails = () => {
    }
 
    const { poster, genre, duration, releaseYear, summary } = movie.form;
+   const { _id } = movie;
+
+   const handleDelete = (_id) => {
+      console.log(_id);
+      Swal.fire({
+         title: "Are you sure?",
+         text: "You won't be able to revert this!",
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: "#3085d6",
+         cancelButtonColor: "#d33",
+         confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+         if (result.isConfirmed) {
+            fetch(`http://localhost:5000/movie/${_id}`, {
+               method: "DELETE",
+            })
+               .then((res) => res.json())
+               .then((data) => {
+                  console.log(data);
+                  if (data.deleteCount > 0) {
+                     Swal.fire({
+                        title: "Deleted!",
+                        text: "Your Movie has been deleted.",
+                        icon: "success",
+                     });
+                  }
+               });
+         }
+      });
+   };
+
    return (
       <div>
          <div className=" card card-side bg-base-100 m-20  shadow-lg rounded-2xl">
@@ -40,7 +73,10 @@ const MovieDetails = () => {
                   </p>
 
                   <div className="flex gap-10 mt-6">
-                     <button className="btn btn-secondary hover:bg-red-600 transition">
+                     <button
+                        onClick={() => handleDelete(_id)}
+                        className="btn btn-secondary hover:bg-red-600 transition"
+                     >
                         Delete Movie <img src={Delete} alt="" className="h-[20px] w-[20px] flex" />
                      </button>
 
