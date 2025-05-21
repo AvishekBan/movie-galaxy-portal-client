@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { Rating } from "react-simple-star-rating";
+import Swal from "sweetalert2";
 const genres = [
    "Comedy",
    "Drama",
@@ -76,7 +77,13 @@ const Addmovie = () => {
       e.preventDefault();
       if (validate()) {
          console.log("Form Submitted:", form);
-
+         Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+         });
          // handle the actual movie add logic here
          fetch("http://localhost:5000/movie", {
             method: "POST",
