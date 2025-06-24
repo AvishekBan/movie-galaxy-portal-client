@@ -1,7 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import Delete from "../assets/delete_12319558.png";
 import Favourite from "../assets/chat_5251836.png";
+import Update from "../assets/Update.png";
 import Swal from "sweetalert2";
+
 const MovieDetails = () => {
    const { state } = useLocation();
    const movie = state?.movie;
@@ -80,11 +82,15 @@ const MovieDetails = () => {
                         Delete Movie <img src={Delete} alt="" className="h-[20px] w-[20px] flex" />
                      </button>
 
-                     <Link
-                        to="/myFavorites"
-                        className="btn btn-primary hover:bg-blue-950 transition"
-                     >
+                     <button className="btn btn-primary hover:bg-blue-950 transition">
                         Add to Favorite <img src={Favourite} alt="" className="h-[20px] w-[20px]" />
+                     </button>
+
+                     <Link
+                        to="/updateMovie"
+                        className="btn btn-success hover:bg-cyan-300 transition"
+                     >
+                        Update Movie <img src={Update} alt="" className="h-[20px] w-[20px]" />
                      </Link>
                   </div>
                </div>

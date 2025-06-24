@@ -17,6 +17,9 @@ import MovieDetails from "./components/MovieDetails";
 import FeaturedMovies from "./components/FeaturedMovies";
 import PlanSubscription from "./components/PlanSubscription";
 import MovieCard from "./components/MovieCard";
+import AuthProvider from "./providers/AuthProvider";
+import PrivatePath from "./components/PrivatePath";
+import UpdateMovie from "./components/UpdateMovie";
 
 const router = createBrowserRouter([
    {
@@ -39,11 +42,19 @@ const router = createBrowserRouter([
          },
          {
             path: "/myFavorites",
-            element: <Myfavorites></Myfavorites>,
+            element: (
+               <PrivatePath>
+                  <Myfavorites />
+               </PrivatePath>
+            ),
          },
          {
             path: "/tvseries",
-            element: <TvSeries></TvSeries>,
+            element: (
+               <PrivatePath>
+                  <TvSeries />
+               </PrivatePath>
+            ),
          },
          {
             path: "/register",
@@ -55,7 +66,11 @@ const router = createBrowserRouter([
          },
          {
             path: "/movieDetails",
-            element: <MovieDetails></MovieDetails>,
+            element: (
+               <PrivatePath>
+                  <MovieDetails />
+               </PrivatePath>
+            ),
          },
          {
             path: "/FeaturedMovies",
@@ -73,12 +88,18 @@ const router = createBrowserRouter([
             path: "/movieCard",
             element: <MovieCard></MovieCard>,
          },
+         {
+            path: "/updateMovie",
+            element: <UpdateMovie></UpdateMovie>,
+         },
       ],
    },
 ]);
 
 createRoot(document.getElementById("root")).render(
    <StrictMode>
-      <RouterProvider router={router} />
+      <AuthProvider>
+         <RouterProvider router={router} />
+      </AuthProvider>
    </StrictMode>
 );

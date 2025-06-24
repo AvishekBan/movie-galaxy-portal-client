@@ -1,9 +1,45 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
+import { useContext } from "react";
+import Swal from "sweetalert2";
 const Register = () => {
+   const { createUser } = useContext(AuthContext);
+
    const handleSignUp = (e) => {
       e.preventDefault();
-      console.log("form sign up");
+
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+      const name = e.target.name.value; // ✨CHANGED
+      const image = e.target.image.value; // ✨CHANGED
+      console.log("form sign up", email, password);
+
+      if (!name || !email || !image || !password) {
+         Swal.fire({ icon: "error", title: "Error!", text: "Please fill all fields." }); // ✨CHANGED
+         return;
+      }
+
+      if (password.length < 6 || !/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
+         Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "Password must contain uppercase, lowercase and be at least 6 characters long.",
+         }); // ✨CHANGED
+         return; // ✨CHANGED
+      }
+
+      createUser(email, password)
+         .then((result) => {
+            Swal.fire({
+               icon: "success",
+               title: "Registration Successful!",
+               text: "Your account has been created.",
+            });
+            console.log(result.user);
+         })
+         .catch((error) => {
+            console.log("error", error);
+         });
    };
 
    return (
@@ -13,12 +49,12 @@ const Register = () => {
                <h1 className="text-5xl font-bold">Register Now!</h1>
             </div>
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-               <div onSubmit={handleSignUp} className="card-body">
+               <form onSubmit={handleSignUp} className="card-body">
                   <fieldset className="fieldset ">
                      <label className="fieldset-label ">Name</label>
-                     <input type="Name" className="input " placeholder="Name" name="Name" />
+                     <input type="text" className="input " placeholder="Name" name="name" />
                      <label className="fieldset-label">Email</label>
-                     <input type="Email" className="input" placeholder="Email" name="Email" />
+                     <input type="email" className="input" placeholder="Email" name="email" />
 
                      <label className="fieldset-label">Photo URL</label>
                      <input
@@ -33,7 +69,7 @@ const Register = () => {
                         type="password"
                         className="input"
                         placeholder="Password"
-                        name="Password"
+                        name="password"
                      />
                      <div>
                         <a className="link link-hover">Forgot password?</a>
@@ -46,7 +82,7 @@ const Register = () => {
                         </Link>
                      </div>
                   </fieldset>
-               </div>
+               </form>
             </div>
          </div>
       </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
 
 const genres = [
    "Comedy",
@@ -19,7 +20,7 @@ const years = [
    1992, 1991, 1990,
 ];
 
-const Addmovie = () => {
+const UpdateMovie = () => {
    const [form, setForm] = useState({
       poster: "",
       title: "",
@@ -101,7 +102,7 @@ const Addmovie = () => {
 
    return (
       <div className="max-w-2xl mx-auto mt-10 bg-white shadow-2xl rounded-3xl p-8 border border-gray-100">
-         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">🎬 Add a New Movie</h2>
+         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">🎬 Update Your Movie</h2>
          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Poster */}
             <div>
@@ -226,4 +227,4 @@ const Addmovie = () => {
    );
 };
 
-export default Addmovie;
+export default UpdateMovie;
