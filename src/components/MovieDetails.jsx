@@ -1,19 +1,24 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import Delete from "../assets/delete_12319558.png";
 import Favourite from "../assets/chat_5251836.png";
 import Update from "../assets/Update.png";
 import Swal from "sweetalert2";
+import { useContext } from "react";
+
+import { AuthContext } from "../providers/AuthProvider";
 
 const MovieDetails = () => {
-   const { state } = useLocation();
-   const movie = state?.movie;
+   const detail = useLoaderData();
+   console.log(detail);
 
-   if (!movie) {
+   const { user } = useContext(AuthContext);
+
+   if (!detail) {
       return <div className="text-center mt-10 text-red-500">No movie data provided.</div>;
    }
 
-   const { poster, genre, duration, releaseYear, summary } = movie.form;
-   const { _id } = movie;
+   const { poster, genre, duration, releaseYear, summary } = detail.form;
+   const { _id } = detail;
 
    const handleDelete = (_id) => {
       console.log(_id);
@@ -44,7 +49,17 @@ const MovieDetails = () => {
          }
       });
    };
-
+   const handleFavorite = (movie) => {
+      console.log(movie);
+      const data = movie.form;
+      fetch("http://localhost:5000/favorites", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify({ data, userEmail: user?.email }), // full movie object
+      })
+         .then((res) => res.json())
+         .then(() => Swal.fire({ icon: "success", title: "Added to favorites!" }));
+   };
    return (
       <div>
          <div className=" card card-side bg-base-100 m-20  shadow-lg rounded-2xl">
@@ -74,7 +89,7 @@ const MovieDetails = () => {
                      <span className="font-semibold text-gray-700">Summary: {summary}</span>
                   </p>
 
-                  <div className="flex gap-10 mt-6">
+                  <div className="lg:flex lg:gap-10 mt-6 md:inline-block ">
                      <button
                         onClick={() => handleDelete(_id)}
                         className="btn btn-secondary hover:bg-red-600 transition"
@@ -82,13 +97,18 @@ const MovieDetails = () => {
                         Delete Movie <img src={Delete} alt="" className="h-[20px] w-[20px] flex" />
                      </button>
 
-                     <button className="btn btn-primary hover:bg-blue-950 transition">
+                     <button
+                        onClick={() => {
+                           handleFavorite(detail);
+                        }}
+                        className="btn btn-primary hover:bg-blue-950 transition"
+                     >
                         Add to Favorite <img src={Favourite} alt="" className="h-[20px] w-[20px]" />
                      </button>
 
                      <Link
                         to="/updateMovie"
-                        className="btn btn-success hover:bg-cyan-300 transition"
+                        className="btn btn-success hover:bg-cyan-300 transition "
                      >
                         Update Movie <img src={Update} alt="" className="h-[20px] w-[20px]" />
                      </Link>

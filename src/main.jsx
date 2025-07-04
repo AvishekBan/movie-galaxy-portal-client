@@ -65,12 +65,13 @@ const router = createBrowserRouter([
             element: <Banner></Banner>,
          },
          {
-            path: "/movieDetails",
+            path: "/movieDetails/:id",
             element: (
                <PrivatePath>
                   <MovieDetails />
                </PrivatePath>
             ),
+            loader: ({ params }) => fetch(`http://localhost:5000/movies/${params.id}`),
          },
          {
             path: "/FeaturedMovies",

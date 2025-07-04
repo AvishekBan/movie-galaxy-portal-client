@@ -49,7 +49,7 @@ const MovieCard = ({ movie }) => {
             </div>
 
             <div className="card-actions justify-end">
-               <Link to="/movieDetails" state={{ movie }} className="btn bg-black text-white">
+               <Link to={`/movieDetails/${movie._id}`} className="btn bg-black text-white">
                   See Details
                </Link>
             </div>

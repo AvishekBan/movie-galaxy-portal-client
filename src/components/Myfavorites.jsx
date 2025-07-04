@@ -1,25 +1,64 @@
+import { useState, useEffect, useContext } from "react";
+import Swal from "sweetalert2";
+import { AuthContext } from "../providers/AuthProvider";
+
 const Myfavorites = () => {
+   const [favorites, setFavorites] = useState([]);
+   const { user, loading } = useContext(AuthContext);
+
+   useEffect(() => {
+      fetch(`http://localhost:5000/favorites?email=${user.email}`)
+         .then((res) => res.json())
+         .then((data) => setFavorites(data));
+   }, [user]);
+
+   if (loading) return null;
+
+   const handleDelete = (id) => {
+      fetch(`http://localhost:5000/favorites/${id}`, {
+         method: "DELETE",
+         headers: {
+            "Content-Type": "application/json",
+         },
+      }).then((res) => {
+         console.log(res);
+
+         Swal.fire({ icon: "success", title: "Removed from favorites!" });
+      });
+   };
+
    return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-8">
-         {
-            <div className="card bg-base-100 shadow-md p-4 rounded-2xl">
-               <img src="" alt="" className="rounded-xl h-[300px] w-full object-cover" />
-               <h2 className="text-xl font-bold mt-2"></h2>
-               <p>
-                  <strong>Genre:</strong>
-               </p>
-               <p>
-                  <strong>Duration:</strong>
-               </p>
-               <p>
-                  <strong>Release Year:</strong>
-               </p>
-               <p>
-                  <strong>Rating:</strong>
-               </p>
-               <button className="btn btn-error mt-4">Delete Favorite</button>
-            </div>
-         }
+         {favorites.map((movie) => {
+            console.log(movie);
+
+            return (
+               <div key={movie._id} className="card bg-base-100 shadow-md p-4 rounded-2xl">
+                  <img
+                     src={movie.data.poster}
+                     alt=""
+                     className="rounded-xl h-[300px] w-full object-cover"
+                  />
+                  <h2 className="text-xl font-bold mt-2">{movie.data.title}</h2>
+                  <p>
+                     <strong>Genre:</strong> {movie.data.genre}
+                  </p>
+                  <p>
+                     <strong>Duration:</strong> {movie.data.duration}
+                  </p>
+                  <p>
+                     <strong>Release Year:</strong> {movie.data.releaseYear}
+                  </p>
+                  <p>
+                     <strong>Rating:</strong> {movie.data.rating}
+                  </p>
+
+                  <button className="btn btn-error mt-4" onClick={() => handleDelete(movie._id)}>
+                     Delete Favorite
+                  </button>
+               </div>
+            );
+         })}
       </div>
    );
 };
