@@ -48,25 +48,22 @@ const NavBar = () => {
             <div>
                <button
                   onClick={handleLogout}
-                  className=" flex items-center gap-2 font-bold  text-red-700 cursor-pointer hover:border-b-2 border-white"
+                  className=" flex items-center gap-2 font-bold cursor-pointer text-red-600 hover:border-b-2 border-white"
                >
-                  <span>Logout</span>
+                  <span className="">Logout</span>
 
                   <img className="w-[20px] h-[20px]" src={Logout} alt="" />
                </button>
             </div>
          ) : (
-            <Link to="/login" className="font-bold cursor-pointer hover:border-b-3   border-white">
+            <Link to="/login" className="font-bold cursor-pointer hover:border-b-3 border-white">
                Login
             </Link>
          )}
       </>
    );
    return (
-      <div
-         className="navbar  fixed top-0 w-full    z-50 bg-white/10 backdrop-blur-md border-b border-white/20 grayscale text-gray-800
-       shadow-sm flex"
-      >
+      <div className="navbar fixed top-0 w-full z-50 bg-white/10 backdrop-blur-md border-b border-white/20 shadow-sm flex">
          <div className="navbar-start">
             <div className="dropdown">
                <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -100,7 +97,7 @@ const NavBar = () => {
             </a>
          </div>
          <div className="navbar-center hidden  lg:flex">
-            <ul className="menu menu-horizontal    gap-8 pr-24">{links}</ul>
+            <ul className="menu menu-horizontal gap-8 pr-24">{links}</ul>
          </div>
          <div className="relative group w-10 mr-2    md:mr-5">
             {user && (

@@ -1,9 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Swal from "sweetalert2";
 const Register = () => {
-   const { createUser } = useContext(AuthContext);
+   const { createUser, user } = useContext(AuthContext);
+   const route = useNavigate();
+
+   useEffect(() => {
+      if (user) {
+         route("/");
+      }
+   }, [route, user]);
 
    const handleSignUp = (e) => {
       e.preventDefault();

@@ -5,6 +5,7 @@ import { SearchBar } from "./MovieCard";
 const Allmovies = () => {
    const movies = useLoaderData();
    const [searchTerm, setSearchTerm] = useState("");
+
    const filteredMovies = movies.filter((movie) =>
       movie.form.title.toLowerCase().includes(searchTerm.toLowerCase())
    );

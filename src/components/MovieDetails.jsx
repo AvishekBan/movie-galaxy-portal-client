@@ -107,7 +107,7 @@ const MovieDetails = () => {
                      </button>
 
                      <Link
-                        to="/updateMovie"
+                        to={`/updateMovie/${detail._id}`}
                         className="btn btn-success hover:bg-cyan-300 transition "
                      >
                         Update Movie <img src={Update} alt="" className="h-[20px] w-[20px]" />

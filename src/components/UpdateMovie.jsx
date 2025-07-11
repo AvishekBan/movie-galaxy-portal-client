@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Rating } from "react-simple-star-rating";
 import Swal from "sweetalert2";
-import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
 const genres = [
    "Comedy",
@@ -21,6 +21,8 @@ const years = [
 ];
 
 const UpdateMovie = () => {
+   const { id } = useParams();
+
    const [form, setForm] = useState({
       poster: "",
       title: "",
@@ -30,6 +32,22 @@ const UpdateMovie = () => {
       rating: 0,
       summary: "",
    });
+   useEffect(() => {
+      fetch(`http://localhost:5000/update/${id}`)
+         .then((res) => res.json())
+         .then((data) => {
+            setForm({
+               poster: data.poster || "",
+               title: data.title || "",
+               genre: data.genre || "",
+               duration: data.duration || "",
+               releaseYear: data.releaseYear || "",
+               rating: data.rating || 0,
+               summary: data.summary || "",
+            });
+         })
+         .catch((err) => console.error("Error loading movie:", err));
+   }, [id]);
 
    const [errors, setErrors] = useState({});
 
@@ -86,16 +104,26 @@ const UpdateMovie = () => {
             timer: 1500,
          });
          // handle the actual movie add logic here
-         fetch("http://localhost:5000/movie", {
-            method: "POST",
+         fetch(`http://localhost:5000/update/${id}`, {
+            method: "PUT",
             headers: {
                "content-type": "application/json",
             },
-            body: JSON.stringify({ form }),
+            body: JSON.stringify(form),
          })
             .then((res) => res.json())
             .then((data) => {
-               console.log(data);
+               Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "Movie updated successfully!",
+                  showConfirmButton: false,
+                  timer: 1500,
+               });
+               console.log("Update result:", data);
+            })
+            .catch((err) => {
+               console.error("Update failed:", err);
             });
       }
    };
@@ -220,7 +248,7 @@ const UpdateMovie = () => {
                type="submit"
                className="w-full py-3 text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl font-semibold shadow-md transition duration-200"
             >
-               ➕ Add Movie
+               ➕ Update Movie
             </button>
          </form>
       </div>

@@ -90,8 +90,9 @@ const router = createBrowserRouter([
             element: <MovieCard></MovieCard>,
          },
          {
-            path: "/updateMovie",
+            path: "/updateMovie/:id",
             element: <UpdateMovie></UpdateMovie>,
+            loader: ({ params }) => fetch(`http://localhost:5000/update/${params.id}`),
          },
       ],
    },

@@ -14,6 +14,8 @@ export const SearchBar = ({ searchTerm, onChange }) => (
 );
 
 const MovieCard = ({ movie }) => {
+   console.log(movie);
+
    const { poster, title, genre, duration, releaseYear, rating } = movie.form;
    return (
       <div className="card bg-base-100 w-96 shadow-sm">
@@ -43,7 +45,7 @@ const MovieCard = ({ movie }) => {
                         size={25}
                         SVGstyle={{ display: "inline-block" }}
                      />
-                     <span className="text-gray-700 font-medium">{rating.toFixed(1)}</span>
+                     <span className="text-gray-700 font-medium">{rating?.toFixed(1)}</span>
                   </p>
                </div>
             </div>
