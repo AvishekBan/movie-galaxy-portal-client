@@ -9,10 +9,9 @@ const FeaturedMovies = () => {
       fetch("http://localhost:5000/movie")
          .then((res) => res.json())
          .then((data) => {
-            const sorted = data
-               .map((item) => item)
-               .sort((a, b) => b.rating - a.rating)
-               .slice(0, 6);
+            console.log(data);
+
+            const sorted = data.map((item) => item).sort((a, b) => b.form.rating - a.form.rating);
             setMovies(sorted);
          });
    }, []);
@@ -25,7 +24,7 @@ const FeaturedMovies = () => {
          </div>
 
          <div className="flex flex-wrap justify-center gap-6">
-            {movies.map((movie, index) => (
+            {movies.slice(0, 6).map((movie, index) => (
                <div key={index} className="card bg-base-100 w-96 shadow-sm">
                   <figure className="px-10 pt-10">
                      <img

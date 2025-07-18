@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Rating } from "react-simple-star-rating";
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
 
 const genres = [
    "Comedy",
@@ -21,152 +22,100 @@ const years = [
 ];
 
 const UpdateMovie = () => {
+   const initialData = useLoaderData();
    const { id } = useParams();
+   const {
+      register,
+      handleSubmit,
+      setValue,
+      formState: { errors },
+   } = useForm();
 
-   const [form, setForm] = useState({
-      poster: "",
-      title: "",
-      genre: "",
-      duration: "",
-      releaseYear: "",
-      rating: 0,
-      summary: "",
-   });
    useEffect(() => {
       fetch(`http://localhost:5000/update/${id}`)
          .then((res) => res.json())
          .then((data) => {
-            setForm({
-               poster: data.poster || "",
-               title: data.title || "",
-               genre: data.genre || "",
-               duration: data.duration || "",
-               releaseYear: data.releaseYear || "",
-               rating: data.rating || 0,
-               summary: data.summary || "",
-            });
+            setValue("poster", data.poster || ""); // ✅ fixed
+            setValue("title", data.title || ""); // ✅ fixed
+            setValue("genre", data.genre || ""); // ✅ fixed
+            setValue("duration", data.duration || ""); // ✅ fixed
+            setValue("releaseYear", data.releaseYear || ""); // ✅ fixed
+            setValue("rating", data.rating || 0); // ✅ fixed
+            setValue("summary", data.summary || ""); // ✅ fixed
          })
          .catch((err) => console.error("Error loading movie:", err));
-   }, [id]);
+   }, [id, setValue]);
 
-   const [errors, setErrors] = useState({});
-
-   const validate = () => {
-      const newErrors = {};
-
-      if (!form.poster || !form.poster.startsWith("http")) {
-         newErrors.poster = "Poster must be a valid URL";
-      }
-      if (!form.title || form.title.length < 2) {
-         newErrors.title = "Title must be at least 2 characters long";
-      }
-      if (!form.genre) {
-         newErrors.genre = "Please select a genre";
-      }
-      if (!form.duration || Number(form.duration) <= 60) {
-         newErrors.duration = "Duration must be more than 60 minutes";
-      }
-      if (!form.releaseYear) {
-         newErrors.releaseYear = "Please select a release year";
-      }
-      if (!form.rating || form.rating <= 0) {
-         newErrors.rating = "Please select a rating";
-      }
-
-      if (!form.summary || form.summary.length < 10) {
-         newErrors.summary = "Summary must be at least 10 characters long";
-      }
-
-      setErrors(newErrors);
-      return Object.keys(newErrors).length === 0;
-   };
-
-   const handleChange = (e) => {
-      setForm({ ...form, [e.target.name]: e.target.value });
+   const onSubmit = (data) => {
+      fetch(`http://localhost:5000/update/${id}`, {
+         method: "PUT",
+         headers: {
+            "content-type": "application/json",
+         },
+         body: JSON.stringify(data),
+      })
+         .then((res) => res.json())
+         .then((result) => {
+            Swal.fire({
+               position: "top-end",
+               icon: "success",
+               title: "Movie updated successfully!",
+               showConfirmButton: false,
+               timer: 1500,
+            });
+            console.log("Update result:", result);
+         })
+         .catch((err) => {
+            console.error("Update failed:", err);
+         });
    };
 
    const handleRating = (rate) => {
-      setForm((prev) => ({
-         ...prev,
-         rating: rate,
-      }));
-   };
-
-   const handleSubmit = (e) => {
-      e.preventDefault();
-      if (validate()) {
-         console.log("Form Submitted:", form);
-         Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500,
-         });
-         // handle the actual movie add logic here
-         fetch(`http://localhost:5000/update/${id}`, {
-            method: "PUT",
-            headers: {
-               "content-type": "application/json",
-            },
-            body: JSON.stringify(form),
-         })
-            .then((res) => res.json())
-            .then((data) => {
-               Swal.fire({
-                  position: "top-end",
-                  icon: "success",
-                  title: "Movie updated successfully!",
-                  showConfirmButton: false,
-                  timer: 1500,
-               });
-               console.log("Update result:", data);
-            })
-            .catch((err) => {
-               console.error("Update failed:", err);
-            });
-      }
+      setValue("rating", rate);
    };
 
    return (
       <div className="max-w-2xl mx-auto mt-10 bg-white shadow-2xl rounded-3xl p-8 border border-gray-100">
          <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">🎬 Update Your Movie</h2>
-         <form onSubmit={handleSubmit} className="space-y-6">
+         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Poster */}
             <div>
                <label className="block text-gray-700 font-medium mb-1">Movie Poster URL</label>
                <input
+                  defaultValue={initialData?.form.poster}
                   type="text"
-                  name="poster"
-                  value={form.poster}
-                  onChange={handleChange}
+                  {...register("poster", { required: "poster is required" })}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="https://example.com/poster.jpg"
                />
-               {errors.poster && <p className="text-red-500 text-sm mt-1">{errors.poster}</p>}
+               {errors.poster && (
+                  <p className="text-red-500 text-sm mt-1">{errors.poster.message}</p>
+               )}
             </div>
 
             {/* Title */}
             <div>
                <label className="block text-gray-700 font-medium mb-1">Movie Title</label>
                <input
+                  defaultValue={initialData?.form.title}
                   type="text"
-                  name="title"
-                  value={form.title}
-                  onChange={handleChange}
+                  {...register("title", { required: "title is required" })}
+                  // value={form.title}
+                  // onChange={handleChange}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="e.g. Inception"
                />
-               {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
+               {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
             </div>
 
             {/* Genre */}
             <div>
                <label className="block text-gray-700 font-medium mb-1">Genre</label>
                <select
-                  name="genre"
-                  value={form.genre}
-                  onChange={handleChange}
+                  defaultValue={initialData?.form.genre}
+                  {...register("genre", { required: "Genre is required" })}
+                  // value={form.genre}
+                  // onChange={handleChange}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                >
                   <option value="">Select genre</option>
@@ -176,7 +125,7 @@ const UpdateMovie = () => {
                      </option>
                   ))}
                </select>
-               {errors.genre && <p className="text-red-500 text-sm mt-1">{errors.genre}</p>}
+               {errors.genre && <p className="text-red-500 text-sm mt-1">{errors.genre.message}</p>}
             </div>
 
             {/* Duration */}
@@ -184,22 +133,26 @@ const UpdateMovie = () => {
                <label className="block text-gray-700 font-medium mb-1">Duration (minutes)</label>
                <input
                   type="number"
-                  name="duration"
-                  value={form.duration}
-                  onChange={handleChange}
+                  defaultValue={initialData?.form.duration}
+                  {...register("duration", { required: "Duration is required" })}
+                  // value={form.duration}
+                  // onChange={handleChange}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="e.g. 120"
                />
-               {errors.duration && <p className="text-red-500 text-sm mt-1">{errors.duration}</p>}
+               {errors.duration && (
+                  <p className="text-red-500 text-sm mt-1">{errors.duration.message}</p>
+               )}
             </div>
 
             {/* Release Year */}
             <div>
                <label className="block text-gray-700 font-medium mb-1">Release Year</label>
                <select
-                  name="releaseYear"
-                  value={form.releaseYear}
-                  onChange={handleChange}
+                  defaultValue={initialData?.form.releaseYear}
+                  {...register("releaseYear", { required: "Release year is required" })}
+                  // value={form.releaseYear}
+                  // onChange={handleChange}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                >
                   <option value="">Select year</option>
@@ -210,37 +163,48 @@ const UpdateMovie = () => {
                   ))}
                </select>
                {errors.releaseYear && (
-                  <p className="text-red-500 text-sm mt-1">{errors.releaseYear}</p>
+                  <p className="text-red-500 text-sm mt-1">{errors.releaseYear.message}</p>
                )}
             </div>
 
             {/* Rating */}
             <div className="mb-4">
                <label className="block text-gray-700 font-medium mb-2">Rating</label>
-               <div className="inline-block">
-                  <Rating
-                     onClick={handleRating}
-                     initialValue={form.rating} // ✅ Convert 0–5 back to 0–100 for stars
-                     size={30}
-                     allowFraction
-                     SVGstyle={{ display: "inline-block" }}
-                  />
-               </div>
-               {errors.rating && <p className="text-red-500 text-sm mt-1">{errors.rating}</p>}
+               {/* <div className="inline-block"> */}
+               {/* <Controller
+                  control={control}
+                  name="rating"
+                  rules={{ required: "rating is required" }}
+                  render={({ field }) => ( */}
+               <Rating
+                  onClick={handleRating}
+                  initialValue={initialData?.form.rating} // ✅ Convert 0–5 back to 0–100 for stars
+                  size={30}
+                  allowFraction
+                  SVGstyle={{ display: "inline-block" }}
+               />
+               {/* )} */}
+               {/* /> */}
+               {errors.rating && (
+                  <p className="text-red-500 text-sm mt-1">{errors.rating.message}</p>
+               )}
             </div>
 
             {/* Summary */}
             <div>
                <label className="block text-gray-700 font-medium mb-1">Summary</label>
                <textarea
-                  name="summary"
-                  value={form.summary}
-                  onChange={handleChange}
+                  defaultValue={initialData?.form.summary}
+                  {...register("summary", { required: "Summary is required" })}
+                  // value={form.summary}
+                  // onChange={handleChange}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                   rows="4"
                   placeholder="Brief summary of the movie..."
                />
-               {errors.summary && <p className="text-red-500 text-sm mt-1">{errors.summary}</p>}
+               {errors.summary && (
+                  <p className="text-red-500 text-sm mt-1">{errors.summary.message}</p>
+               )}
             </div>
 
             {/* Submit */}
