@@ -100,8 +100,6 @@ const UpdateMovie = () => {
                   defaultValue={initialData?.form.title}
                   type="text"
                   {...register("title", { required: "title is required" })}
-                  // value={form.title}
-                  // onChange={handleChange}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="e.g. Inception"
                />
@@ -114,8 +112,6 @@ const UpdateMovie = () => {
                <select
                   defaultValue={initialData?.form.genre}
                   {...register("genre", { required: "Genre is required" })}
-                  // value={form.genre}
-                  // onChange={handleChange}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                >
                   <option value="">Select genre</option>
@@ -135,8 +131,6 @@ const UpdateMovie = () => {
                   type="number"
                   defaultValue={initialData?.form.duration}
                   {...register("duration", { required: "Duration is required" })}
-                  // value={form.duration}
-                  // onChange={handleChange}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="e.g. 120"
                />
@@ -151,8 +145,6 @@ const UpdateMovie = () => {
                <select
                   defaultValue={initialData?.form.releaseYear}
                   {...register("releaseYear", { required: "Release year is required" })}
-                  // value={form.releaseYear}
-                  // onChange={handleChange}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                >
                   <option value="">Select year</option>
@@ -170,12 +162,7 @@ const UpdateMovie = () => {
             {/* Rating */}
             <div className="mb-4">
                <label className="block text-gray-700 font-medium mb-2">Rating</label>
-               {/* <div className="inline-block"> */}
-               {/* <Controller
-                  control={control}
-                  name="rating"
-                  rules={{ required: "rating is required" }}
-                  render={({ field }) => ( */}
+
                <Rating
                   onClick={handleRating}
                   initialValue={initialData?.form.rating} // ✅ Convert 0–5 back to 0–100 for stars
@@ -196,8 +183,6 @@ const UpdateMovie = () => {
                <textarea
                   defaultValue={initialData?.form.summary}
                   {...register("summary", { required: "Summary is required" })}
-                  // value={form.summary}
-                  // onChange={handleChange}
                   className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                   rows="4"
                   placeholder="Brief summary of the movie..."

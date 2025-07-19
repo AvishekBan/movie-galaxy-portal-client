@@ -1,8 +1,8 @@
-## Website name:
-
-#### MovieGalaxy
+## Website name: #### MovieGalaxy
 
 ## Live site URL:
+
+https://movie-galaxy-mg.netlify.app/
 
 ## Website features:
 

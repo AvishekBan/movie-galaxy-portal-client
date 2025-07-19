@@ -17,12 +17,12 @@ const Register = () => {
 
       const email = e.target.email.value;
       const password = e.target.password.value;
-      const name = e.target.name.value; // ✨CHANGED
-      const image = e.target.image.value; // ✨CHANGED
+      const name = e.target.name.value;
+      const image = e.target.image.value;
       console.log("form sign up", email, password);
 
       if (!name || !email || !image || !password) {
-         Swal.fire({ icon: "error", title: "Error!", text: "Please fill all fields." }); // ✨CHANGED
+         Swal.fire({ icon: "error", title: "Error!", text: "Please fill all fields." });
          return;
       }
 
@@ -31,8 +31,8 @@ const Register = () => {
             icon: "error",
             title: "Error!",
             text: "Password must contain uppercase, lowercase and be at least 6 characters long.",
-         }); // ✨CHANGED
-         return; // ✨CHANGED
+         });
+         return;
       }
 
       createUser(email, password)
