@@ -9,7 +9,6 @@ import { AuthContext } from "../providers/AuthProvider";
 
 const MovieDetails = () => {
    const detail = useLoaderData();
-   console.log(detail);
 
    const { user } = useContext(AuthContext);
 
@@ -21,7 +20,6 @@ const MovieDetails = () => {
    const { _id } = detail;
 
    const handleDelete = (_id) => {
-      console.log(_id);
       Swal.fire({
          title: "Are you sure?",
          text: "You won't be able to revert this!",
@@ -32,12 +30,11 @@ const MovieDetails = () => {
          confirmButtonText: "Yes, delete it!",
       }).then((result) => {
          if (result.isConfirmed) {
-            fetch(`http://localhost:5000/movie/${_id}`, {
+            fetch(`https://movie-portal-server-wine.vercel.app/movie/${_id}`, {
                method: "DELETE",
             })
                .then((res) => res.json())
                .then((data) => {
-                  console.log(data);
                   if (data.deleteCount > 0) {
                      Swal.fire({
                         title: "Deleted!",
@@ -50,9 +47,8 @@ const MovieDetails = () => {
       });
    };
    const handleFavorite = (movie) => {
-      console.log(movie);
       const data = movie.form;
-      fetch("http://localhost:5000/favorites", {
+      fetch("https://movie-portal-server-wine.vercel.app/favorites", {
          method: "POST",
          headers: { "Content-Type": "application/json" },
          body: JSON.stringify({ data, userEmail: user?.email }), // full movie object

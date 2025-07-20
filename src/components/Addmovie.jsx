@@ -76,7 +76,6 @@ const Addmovie = () => {
    const handleSubmit = (e) => {
       e.preventDefault();
       if (validate()) {
-         console.log("Form Submitted:", form);
          Swal.fire({
             position: "top-end",
             icon: "success",
@@ -85,17 +84,13 @@ const Addmovie = () => {
             timer: 1500,
          });
          // handle the actual movie add logic here
-         fetch("http://localhost:5000/movie", {
+         fetch("https://movie-portal-server-wine.vercel.app/movie", {
             method: "POST",
             headers: {
                "content-type": "application/json",
             },
             body: JSON.stringify({ form }),
-         })
-            .then((res) => res.json())
-            .then((data) => {
-               console.log(data);
-            });
+         }).then((res) => res.json());
       }
    };
 

@@ -30,7 +30,7 @@ const router = createBrowserRouter([
          {
             path: "/allMovies",
             element: <Allmovies></Allmovies>,
-            loader: () => fetch("http://localhost:5000/movie"),
+            loader: () => fetch("https://movie-portal-server-wine.vercel.app/movie"),
          },
          {
             path: "/addmovie",
@@ -75,7 +75,8 @@ const router = createBrowserRouter([
                   <MovieDetails />
                </PrivatePath>
             ),
-            loader: ({ params }) => fetch(`http://localhost:5000/movies/${params.id}`),
+            loader: ({ params }) =>
+               fetch(`https://movie-portal-server-wine.vercel.app/movies/${params.id}`),
          },
          {
             path: "/FeaturedMovies",
@@ -100,7 +101,8 @@ const router = createBrowserRouter([
                   <UpdateMovie />
                </PrivatePath>
             ),
-            loader: ({ params }) => fetch(`http://localhost:5000/update/${params.id}`),
+            loader: ({ params }) =>
+               fetch(`https://movie-portal-server-wine.vercel.app/update/${params.id}`),
          },
       ],
    },

@@ -19,7 +19,6 @@ const Register = () => {
       const password = e.target.password.value;
       const name = e.target.name.value;
       const image = e.target.image.value;
-      console.log("form sign up", email, password);
 
       if (!name || !email || !image || !password) {
          Swal.fire({ icon: "error", title: "Error!", text: "Please fill all fields." });
@@ -36,17 +35,14 @@ const Register = () => {
       }
 
       createUser(email, password)
-         .then((result) => {
+         .then(() => {
             Swal.fire({
                icon: "success",
                title: "Registration Successful!",
                text: "Your account has been created.",
             });
-            console.log(result.user);
          })
-         .catch((error) => {
-            console.log("error", error);
-         });
+         .catch(() => {});
    };
 
    return (

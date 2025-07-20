@@ -32,7 +32,7 @@ const UpdateMovie = () => {
    } = useForm();
 
    useEffect(() => {
-      fetch(`http://localhost:5000/update/${id}`)
+      fetch(`https://movie-portal-server-wine.vercel.app/update/${id}`)
          .then((res) => res.json())
          .then((data) => {
             setValue("poster", data.poster || ""); // ✅ fixed
@@ -42,12 +42,11 @@ const UpdateMovie = () => {
             setValue("releaseYear", data.releaseYear || ""); // ✅ fixed
             setValue("rating", data.rating || 0); // ✅ fixed
             setValue("summary", data.summary || ""); // ✅ fixed
-         })
-         .catch((err) => console.error("Error loading movie:", err));
+         });
    }, [id, setValue]);
 
    const onSubmit = (data) => {
-      fetch(`http://localhost:5000/update/${id}`, {
+      fetch(`https://movie-portal-server-wine.vercel.app/update/${id}`, {
          method: "PUT",
          headers: {
             "content-type": "application/json",
@@ -55,7 +54,7 @@ const UpdateMovie = () => {
          body: JSON.stringify(data),
       })
          .then((res) => res.json())
-         .then((result) => {
+         .then(() => {
             Swal.fire({
                position: "top-end",
                icon: "success",
@@ -63,11 +62,8 @@ const UpdateMovie = () => {
                showConfirmButton: false,
                timer: 1500,
             });
-            console.log("Update result:", result);
          })
-         .catch((err) => {
-            console.error("Update failed:", err);
-         });
+         .catch(() => {});
    };
 
    const handleRating = (rate) => {

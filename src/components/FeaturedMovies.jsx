@@ -6,16 +6,13 @@ const FeaturedMovies = () => {
    const [movies, setMovies] = useState([]);
 
    useEffect(() => {
-      fetch("http://localhost:5000/movie")
+      fetch("https://movie-portal-server-wine.vercel.app/movie")
          .then((res) => res.json())
          .then((data) => {
-            console.log(data);
-
             const sorted = data.map((item) => item).sort((a, b) => b.form.rating - a.form.rating);
             setMovies(sorted);
          });
    }, []);
-   console.log(movies);
 
    return (
       <div>

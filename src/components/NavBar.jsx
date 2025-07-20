@@ -9,13 +9,10 @@ const NavBar = () => {
 
    const handleLogout = () => {
       logout()
-         .then((result) => {
-            console.log(result.user);
+         .then(() => {
             navigate("/");
          })
-         .catch((error) => {
-            console.log(error);
-         });
+         .catch(() => {});
    };
    const links = (
       <>

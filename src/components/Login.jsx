@@ -15,7 +15,6 @@ const Login = () => {
 
       const email = e.target.email.value;
       const password = e.target.password.value;
-      console.log(email, password);
 
       if (!email || !password) {
          Swal.fire({ icon: "error", title: "Oops!", text: "Please fill all fields" });
@@ -23,22 +22,18 @@ const Login = () => {
       }
 
       signInUser(email, password)
-         .then((result) => {
+         .then(() => {
             route(location?.state ? location.state : "/");
             Swal.fire({ icon: "success", title: "Logged in!", text: "Welcome back!" });
-            console.log(result.user);
          })
-         .catch((error) => {
-            console.log(error);
-         });
+         .catch(() => {});
    };
 
    const handleGoogleSignIn = () => {
       signInWithGoogle()
-         .then((result) => {
+         .then(() => {
             route(location?.state ? location.state : "/");
             Swal.fire({ icon: "success", title: "Logged in!", text: "Welcome back!" });
-            console.log(result.user);
          })
          .catch((error) => {
             Swal.fire({ icon: "error", title: "Error!", text: error.message });

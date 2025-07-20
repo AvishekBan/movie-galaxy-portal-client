@@ -14,8 +14,6 @@ export const SearchBar = ({ searchTerm, onChange }) => (
 );
 
 const MovieCard = ({ movie }) => {
-   console.log(movie);
-
    const { poster, title, genre, duration, releaseYear, rating } = movie.form;
    return (
       <div className="card bg-base-100 w-96 shadow-sm">

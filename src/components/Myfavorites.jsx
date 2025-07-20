@@ -7,7 +7,7 @@ const Myfavorites = () => {
    const { user, loading } = useContext(AuthContext);
 
    useEffect(() => {
-      fetch(`http://localhost:5000/favorites?email=${user.email}`)
+      fetch(`https://movie-portal-server-wine.vercel.app/favorites?email=${user.email}`)
          .then((res) => res.json())
          .then((data) => setFavorites(data));
    }, [user]);
@@ -15,14 +15,12 @@ const Myfavorites = () => {
    if (loading) return null;
 
    const handleDelete = (id) => {
-      fetch(`http://localhost:5000/favorites/${id}`, {
+      fetch(`https://movie-portal-server-wine.vercel.app/favorites/${id}`, {
          method: "DELETE",
          headers: {
             "Content-Type": "application/json",
          },
-      }).then((res) => {
-         console.log(res);
-
+      }).then(() => {
          Swal.fire({ icon: "success", title: "Removed from favorites!" });
       });
    };
@@ -30,8 +28,6 @@ const Myfavorites = () => {
    return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-8">
          {favorites.map((movie) => {
-            console.log(movie);
-
             return (
                <div key={movie._id} className="card bg-base-100 shadow-md p-4 rounded-2xl">
                   <img
